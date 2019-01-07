@@ -7,11 +7,30 @@ const puppeteer = require('puppeteer');
     await page.goto(url);
     // await page.screenshot({path: 'example.png'});
 
-    const h2 = await page.evaluate(() => document.querySelector('h2').textContent);
-    // const innerText = await page.evaluate(() => document.querySelector('p').innerText);
+    // h3 scrape
+    const titles = await page.evaluate(() => 
+        Array.from(document.querySelectorAll('div.compact h3.title'))
+            .map(partner => partner.innerText.trim())
+    );
     
-    console.log(h2);
-    // console.log(innerText);
+    // image scrape
+    const logos = await page.evaluate(() => 
+        Array.from(document.querySelectorAll('div.compact .logo img'))
+            .map(logo => logo.src)
+    );
+    
+    // way to scrape multiple items and create an object
+    const partners = await page.evaluate(() => 
+        Array.from(document.querySelectorAll('div.compact'))
+            .map(compacts => ({
+                title: compacts.querySelector('h3.title').textContent.trim(),
+                logo: compacts.querySelector('.logo img').src
+            }))
+    );
+
+    // console.log(titles);
+    // console.log(logos);
+    console.log(partners);
 
     await browser.close();
 })();
