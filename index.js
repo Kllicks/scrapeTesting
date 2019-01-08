@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
     const extractPartners = async (url) => {
         const page = await browser.newPage();
         await page.goto(url);
+        console.log(`scraping: ${url}`);
         // await page.screenshot({path: 'example.png'});
         
         // way to scrape multiple items and create an object
@@ -48,7 +49,7 @@ const puppeteer = require('puppeteer');
     // );
     // console.log(logos);
 
-    const firstUrl = 'https://marketingplatform.google.com/about/partners/find-a-partner?page=1';
+    const firstUrl = 'https://marketingplatform.google.com/about/partners/find-a-partner?page=45';
     const partners = await extractPartners(firstUrl);
     // console.log(partners);
 

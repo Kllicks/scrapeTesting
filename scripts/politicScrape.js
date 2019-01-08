@@ -8,6 +8,8 @@ const puppeteer = require("puppeteer");
 	// Scrape the data we want
 	const page = await browser.newPage();
 	await page.goto(url);
+	console.log(`scraping: ${url}`);
+
 	const partnersOnPage = await page.evaluate(() =>
 		Array.from(document.querySelectorAll("div.compact")).map(compact => ({
 		title: compact.querySelector("h3.title").innerText.trim(),
